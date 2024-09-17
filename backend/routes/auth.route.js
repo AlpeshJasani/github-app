@@ -5,8 +5,11 @@ const router = express.Router();
 
 // used GET method instead POST cause.. there is no form submition..
 
-router.get("/github", passport.authenticate("github", { scope: ["user:email"] }));
-
+router.get("/github", passport.authenticate("github", { 
+	scope: ["user:email"], 
+	callbackURL: process.env.CLIENT_BASE_URL + "/api/auth/github/callback"
+  }));
+  
 router.get("/github/callback",
 	passport.authenticate("github", { failureRedirect: process.env.CLIENT_BASE_URL + "/login" }),
 	function (req, res) {
